@@ -1,4 +1,4 @@
-service: build-mentorship-romasaldan
+service: bucket-mentorship-romasaldan
 
 frameworkVersion: "3"
 
@@ -19,7 +19,7 @@ plugins:
 
 custom:
   client:
-    bucketName: build-mentorship-romasaldan
+    bucketName: bucket-mentorship-romasaldan
     distributionFolder: dist
     indexDocument: index.html
   s3BucketName: ${self:custom.client.bucketName}
@@ -37,7 +37,11 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.s3BucketName}
-        AccessControl: PublicRead
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
