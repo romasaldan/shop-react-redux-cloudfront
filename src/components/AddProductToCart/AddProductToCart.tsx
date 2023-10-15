@@ -8,12 +8,12 @@ import IconButton from "@mui/material/IconButton";
 
 type AddProductToCartProps = {
   product: Product;
-  isFetching: boolean;
+  isFetching?: boolean;
 };
 
 export default function AddProductToCart({
   product,
-  isFetching,
+  isFetching = false,
 }: AddProductToCartProps) {
   // const { mutate: upsertCart } = useUpsertCart();
   // const invalidateCart = useInvalidateCart();
