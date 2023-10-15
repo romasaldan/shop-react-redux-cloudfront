@@ -4,40 +4,42 @@ import CartIcon from "@mui/icons-material/ShoppingCart";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import IconButton from "@mui/material/IconButton";
-import { useCart, useInvalidateCart, useUpsertCart } from "~/queries/cart";
+// import { useCart, useInvalidateCart, useUpsertCart } from "~/queries/cart";
 
 type AddProductToCartProps = {
   product: Product;
+  isFetching: boolean;
 };
 
-export default function AddProductToCart({ product }: AddProductToCartProps) {
-  const { data = [], isFetching } = useCart();
-  const { mutate: upsertCart } = useUpsertCart();
-  const invalidateCart = useInvalidateCart();
-  const cartItem = data.find((i) => i.product.id === product.id);
+export default function AddProductToCart({
+  product,
+  isFetching,
+}: AddProductToCartProps) {
+  // const { mutate: upsertCart } = useUpsertCart();
+  // const invalidateCart = useInvalidateCart();
 
   const addProduct = () => {
-    upsertCart(
-      { product, count: cartItem ? cartItem.count + 1 : 1 },
-      { onSuccess: invalidateCart }
-    );
+    // upsertCart(
+    //   { product, count: product.count ? product.count + 1 : 1 },
+    //   { onSuccess: invalidateCart }
+    // );
   };
 
   const removeProduct = () => {
-    if (cartItem) {
-      upsertCart(
-        { ...cartItem, count: cartItem.count - 1 },
-        { onSuccess: invalidateCart }
-      );
-    }
+    // if (product) {
+    //   upsertCart(
+    //     { ...product, count: cartItem.count - 1 },
+    //     { onSuccess: invalidateCart }
+    //   );
+    // }
   };
 
-  return cartItem ? (
+  return product.count ? (
     <>
       <IconButton disabled={isFetching} onClick={removeProduct} size="large">
         <Remove color={"secondary"} />
       </IconButton>
-      <Typography align="center">{cartItem.count}</Typography>
+      <Typography align="center">{product.count}</Typography>
       <IconButton disabled={isFetching} onClick={addProduct} size="large">
         <Add color={"secondary"} />
       </IconButton>
