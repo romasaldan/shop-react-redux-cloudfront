@@ -1,11 +1,11 @@
-service: my-store-app
+service: bucket-mentorship-romasaldan
 
 frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: nodejs14.x
-  region: eu-west-1
+  region: eu-north-1
   # setup profile for AWS CLI.
   # profile: node-aws
 
@@ -19,8 +19,9 @@ plugins:
 
 custom:
   client:
-    bucketName: my-store-app
+    bucketName: bucket-mentorship-romasaldan
     distributionFolder: dist
+    indexDocument: index.html
   s3BucketName: ${self:custom.client.bucketName}
 
   ## Serverless-single-page-app-plugin configuration:
@@ -36,7 +37,11 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.s3BucketName}
-        AccessControl: PublicRead
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
